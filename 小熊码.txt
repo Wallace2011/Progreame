@@ -1,0 +1,69 @@
+pa = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+pA = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+pa2 = ["0","1","2","3","4","5","6","7","8","9"]
+pa3 = [",",".","!","?"]
+pa4 = ["+","-","*","/",":","\"","\'","@","#","$","%","^","&","(",")","_","<",">","[","]","{","}","`","~"]
+f = 0
+m = input("请选择模式（1.加密 2.解密 3.说明书）：")
+if m == "1":
+    p = input("请输入需加密文本：")
+    p = list(p)
+    mm = ""
+    for i in p:
+        if i in pa:
+            add = pa.index(i)
+        if i in pA:
+            add = pA.index(i) 
+        if i in pa3:
+            add = pa3.index(i)
+            add += 26
+        if i in pa2:
+            add = pa2.index(i)
+            add += 30
+        if i == " ":
+            add = 40
+        if i in pa4:
+            add = pa4.index(i)
+            add += 41
+        f+=add
+        mm += str(add)
+        mm += "."
+    mm += str(f)
+    mm += "."
+    print("此文件的小熊码为：",mm)
+if m == "2":
+    mm = input("请输入需解密小熊码：").split(".")
+    if "" not in mm:
+        print("此小熊码可能被篡改过，无法解密")
+    else:
+        mm.remove("")
+        y = mm[-1]
+        del mm[-1]
+        h = 0
+        for x in mm:
+            h += int(x)
+        if int(h) == int(y):
+            nr = ""
+            for i in mm:
+                mm1 = int(i)
+                if mm1 < 26:
+                    add = pa[mm1]
+                if mm1 > 25 and mm1 < 30:
+                    num = mm1 - 26
+                    add = pa3[num]
+                if mm1 > 29 and mm1 < 40:
+                    num = mm1 - 30
+                    add = pa2[num]
+                if mm1 == 40:
+                    add = " "
+                if mm1 > 40:
+                    num = mm1 - 41
+                    add = pa4[num]
+                nr += add
+            print(nr)
+        else:
+            print("此小熊码可能被篡改过，无法解密")
+if m == "3":
+    print("可以加密除中文外的所有字符")
+    print("加密后称之为小熊码")
+    print("由于社区python终端不能直接按ctrl+c和ctrl+v。因此复制粘贴都要用到右键里的功能，感觉有点小麻烦。")
